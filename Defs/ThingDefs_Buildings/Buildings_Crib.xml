@@ -44,9 +44,11 @@
           <li>VitalsMonitor</li>
         </linkableFacilities>
       </li>
+	  <!--
       <li Class="CompProperties_RoomIdentifier">
 	<roomStat>Impressiveness</roomStat>
       </li>
+	  -->
     </comps>
     <fillPercent>0.4</fillPercent>
     <pathCost>60</pathCost>

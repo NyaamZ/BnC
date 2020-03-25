@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="RimWorld-Children.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyClass.cs">
+    <Files>
+      <File FileName="MyClass.cs" Line="3" Column="3" />
+      <File FileName="Detours.cs" Line="68" Column="68" />
+      <File FileName="DetourInjector.cs" Line="24" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

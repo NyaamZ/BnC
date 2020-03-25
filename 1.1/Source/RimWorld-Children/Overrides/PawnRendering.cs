@@ -2,7 +2,7 @@
 using RimWorld;
 using Verse;
 using UnityEngine;
-using Harmony;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -116,7 +116,7 @@ namespace RimWorldChildren
 			//      //Vector3 loc = rootLoc;  ---> change to
             //      Vector3 loc = ModifyChildYPosOffset(rootLoc);
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Ldarg_1) + 1;  //insert after rootLoc is loaded
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex);
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex);
             ILs.InsertRange(injectIndex, childYPosCorrection);
             // Do this a bunch more times, based on where the Vector3 is STORED:
             // (If RW gets rebuilt, these could all change, hopefully it'll stay at framework 4.7.2)
@@ -128,7 +128,7 @@ namespace RimWorldChildren
             //     this.woundOverlays.RenderOverBody(drawLoc, mesh, quaternion, portrait);
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Stloc_S && //stloc.s 8
                 ((LocalBuilder)x.operand).LocalIndex == 8);
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (drawLoc)");
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (drawLoc)");
             ILs.InsertRange(injectIndex, childYPosCorrection);
             //         Vector3 vector = ModifyChildYPosOffset(rootLoc); // drawing head graphic?
             //                                                          // Plus body's outer armor?
@@ -140,10 +140,10 @@ namespace RimWorldChildren
             //             vector.y += 0.0227272734f;
             //         }
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Stloc_2); // vector
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (vector)");
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (vector)");
             ILs.InsertRange(injectIndex, childYPosCorrection);
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Stloc_3); // a
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (a)");
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (a)");
             ILs.InsertRange(injectIndex, childYPosCorrection);
             //    Vector3 loc2 = ModifyChildYPosOffset(rootLoc + b); // loc2 is used for hats that don't cover face
             //                              // (if (!apparelGraphics[j].sourceApparel.def.apparel.hatRenderedFrontOfFace))
@@ -154,14 +154,14 @@ namespace RimWorldChildren
             //    if (!portrait || !Prefs.HatsOnlyOnMap)
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Stloc_S && //stloc.s 11
                 ((LocalBuilder)x.operand).LocalIndex == 11);
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (loc2)");
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (loc2)");
             ILs.InsertRange(injectIndex, childYPosCorrection);
             //    Vector3 bodyLoc = rootLoc; // Status overlays!
             //    bodyLoc.y += 0.0416666679f;
             //    this.statusOverlays.RenderStatusOverlays(bodyLoc, quaternion, MeshPool.humanlikeHeadSet.MeshAt(headFacing));
             injectIndex = ILs.FindIndex(x => x.opcode == OpCodes.Stloc_S && //stloc.s 23
                 ((LocalBuilder)x.operand).LocalIndex == 23);
-            //Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (bodyloc)");
+            Log.Message("Inserting childYPosCorrection at index "+injectIndex+" (bodyloc)");
             ILs.InsertRange(injectIndex, childYPosCorrection);
             ////// not changed:
             //     for Hats that DO cover face (rootLoc+b)  Is this an oversight?  Who knows!
@@ -190,7 +190,7 @@ namespace RimWorldChildren
                 new CodeInstruction (OpCodes.Ldc_I4_2), // if ( ...<2) continue on
                 new CodeInstruction (OpCodes.Bge, ILs[injectIndex].operand), // branch to where original brfalse jumped
             };
-            //Log.Message("Inserting code for renderBody jump at "+injectIndex);
+            Log.Message("Inserting code for renderBody jump at "+injectIndex);
             ILs.RemoveAt(injectIndex); // remove Brfalse
             ILs.InsertRange(injectIndex, injection1); // replace with our code
             // NOTE: to force drawing any clothes on a baby (2nd if (renderBody)), it would be easier to add
@@ -227,7 +227,7 @@ namespace RimWorldChildren
             injection2[0].labels=ILs[injectIndex].labels; // if anyone else Transpiles, this may keep our test intact
             ILs[injectIndex].labels=new List<Label>();
             ILs[injectIndex].labels.Add(drawHeadCode);
-            //Log.Message("Inserting code for headGraphic drawHeadCode at "+injectIndex);
+            Log.Message("Inserting code for headGraphic drawHeadCode at "+injectIndex);
             ILs.InsertRange(injectIndex, injection2);
 
             /**********************************************************************************************************/
@@ -255,7 +255,7 @@ namespace RimWorldChildren
                 new CodeInstruction (OpCodes.Ldfld, typeof(PawnRenderer).GetField("pawn", AccessTools.all)),
                 new CodeInstruction (OpCodes.Call, typeof(Children_Drawing).GetMethod("ModifyHatForChild")),
             }; // leaves Material on stack - ready to be saved to loc 16!
-            //Log.Message("Inserting ModifyHatForChild at "+injectIndex);
+            Log.Message("Inserting ModifyHatForChild at "+injectIndex);
             ILs.InsertRange(injectIndex, injection3);
 
             // Modify the scale of a hair graphic when drawn on a child
@@ -271,7 +271,7 @@ namespace RimWorldChildren
                 new CodeInstruction (OpCodes.Ldfld, typeof(PawnRenderer).GetField("pawn", AccessTools.all)),
                 new CodeInstruction (OpCodes.Call, AccessTools.Method(typeof(Children_Drawing), "ModifyHairForChild")),
             };
-            //Log.Message("Inserting ModifyHairForChild at "+injectIndex);
+            Log.Message("Inserting ModifyHairForChild at "+injectIndex);
             ILs.InsertRange(injectIndex, injection4);
 
             // Modify the scale of clothing graphics when worn by a child
@@ -317,7 +317,7 @@ namespace RimWorldChildren
                new CodeInstruction (OpCodes.Ldarg_S, 4), //bodyFacing
                new CodeInstruction (OpCodes.Call, typeof(Children_Drawing).GetMethod ("ModifyClothingForChild")),
             };
-            //Log.Message("Inserting ModifyClothingForChild at "+injectIndex);
+            Log.Message("Inserting ModifyClothingForChild at "+injectIndex);
             ILs.InsertRange(injectIndex, injection6);
             // return code.
             foreach (CodeInstruction IL in ILs) {

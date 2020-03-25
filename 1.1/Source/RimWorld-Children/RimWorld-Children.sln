@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RimWorld-Children", "RimWorld-Children.csproj", "{99CE67A2-D50A-4528-AEFD-51CFDE02C9C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99CE67A2-D50A-4528-AEFD-51CFDE02C9C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CE67A2-D50A-4528-AEFD-51CFDE02C9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CE67A2-D50A-4528-AEFD-51CFDE02C9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CE67A2-D50A-4528-AEFD-51CFDE02C9C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,4 @@
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\1.1\Assemblies\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\1.1\Source\RimWorld-Children\obj\Debug\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\1.1\Source\RimWorld-Children\obj\Debug\BabyAndChildren.csprojAssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\1.1\Source\RimWorld-Children\obj\Debug\BabyAndChildren.csproj.CopyComplete
